@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import json
+from ytmusicapi import YTMusic
 
 class Loader:
     def __init__(self):
@@ -48,3 +49,10 @@ f.close()
 data = Loader().load("https://music.bugs.co.kr/musicpd/albumview/45863")
 ptitle, body = Parser().generate_json(data)
 OutputWriter().generate_file(ptitle, body)
+
+'''
+ytmusic = YTMusic('headers_auth.json')
+playlistId = ytmusic.create_playlist('test', 'test description')
+search_results = ytmusic.search('Oasis Wonderwall')
+ytmusic.add_playlist_items(playlistId, [search_results[0]['videoId']])
+'''

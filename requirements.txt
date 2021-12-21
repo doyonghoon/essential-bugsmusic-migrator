@@ -7,3 +7,4 @@ powerline-status==2.7
 requests==2.26.0
 soupsieve==2.3.1
 urllib3==1.26.7
+ytmusicapi==0.19.5
