@@ -2,6 +2,8 @@ import requests
 from bs4 import BeautifulSoup
 import json
 from ytmusicapi import YTMusic
+from os import listdir
+from os.path import isfile, join
 
 class Loader:
     def __init__(self):
@@ -36,9 +38,19 @@ class OutputWriter:
         pass
 
     def generate_file(self, ptitle, body):
-        with open(ptitle + '.json', 'w') as outfile:
+        with open('playlists/' + ptitle + '.json', 'w') as outfile:
             pretty_body = json.dumps(body, indent=2)
             outfile.write(pretty_body)
+    
+    def build_search_queries(self):
+        res = list()
+        playlists = [f for f in listdir('playlists') if isfile(join('playlists', f))]
+        for filename in playlists:
+            with open('playlists/' + filename, 'r') as json_file:
+                songs = json.load(json_file)
+                queries = [" ".join([song['artist'], song['title'], song['album']]) for song in songs]
+                res.append((filename.replace(".json", ""), queries))
+        return res
 
 '''
 f = open("playlist.html", 'r')
@@ -46,13 +58,18 @@ data = f.read()
 f.close()
 '''
 
+'''
 data = Loader().load("https://music.bugs.co.kr/musicpd/albumview/45863")
 ptitle, body = Parser().generate_json(data)
 OutputWriter().generate_file(ptitle, body)
-
 '''
+queries = OutputWriter().build_search_queries()
 ytmusic = YTMusic('headers_auth.json')
-playlistId = ytmusic.create_playlist('test', 'test description')
-search_results = ytmusic.search('Oasis Wonderwall')
-ytmusic.add_playlist_items(playlistId, [search_results[0]['videoId']])
-'''
+for query in queries:
+    title, search_queries = query
+    print(title)
+    playlistId = ytmusic.create_playlist(title, title)
+    for q in search_queries:
+        search_result = ytmusic.search(q)[0]
+        print(search_result)
+        ytmusic.add_playlist_items(playlistId, [search_result['videoId']])
