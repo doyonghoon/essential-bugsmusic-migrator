@@ -36,7 +36,8 @@ class OutputWriter:
 
     def generate_file(self, ptitle, body):
         with open(ptitle + '.json', 'w') as outfile:
-            json.dump(body, outfile)
+            pretty_body = json.dumps(body, indent=2)
+            outfile.write(pretty_body)
 
 '''
 f = open("playlist.html", 'r')
