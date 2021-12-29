@@ -1,1 +1,6 @@
-*.json
+# Byte-compiled / optimized / DLL files
+__pycache__/
+
+headers_auth.json
+albums.txt
+not_founds.txt
