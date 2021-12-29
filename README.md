@@ -1,4 +1,4 @@
-# Music Playlist Parser
+# BugsMusic Playlist Migrator
 
 Migrates playlists from Bugs Music to your Youtube Music library.
 
@@ -37,7 +37,7 @@ https://music.bugs.co.kr/musicpd/albumview/49912
 https://music.bugs.co.kr/musicpd/albumview/48678
 ```
 
-A migrater reads these urls by line, and will treat it as a ready-to-parse if it starts with `http`. Commenting out like `//` will silently drop the url to be parsed.
+A migrator reads these urls by line, and will treat it as a ready-to-parse if it starts with `http`. Commenting out like `//` will silently drop the url to be parsed.
 
 * You can find album links of Bug Music from the description section of [each playlist](https://www.youtube.com/watch?v=z060aThI9qM) in Essential channel of Youtube. Or, you can also find the full list of playlists from [the link](https://music.bugs.co.kr/musicpd/).
 
@@ -46,7 +46,7 @@ A migrater reads these urls by line, and will treat it as a ready-to-parse if it
 
 ## Example
 
-Once you run, the migrater will display the title of your new playlist in your Youtube Music, and will tell you whether each song is successfully added by ✅. Though, when the song is not found on Youtube Music, you will see the emoji character ❌, and eventually you will see a new file called `not_found.txt` after the program ends. This file will contain all missing songs from your playlist.
+Once you run, the migrator will display the title of your new playlist in your Youtube Music, and will tell you whether each song is successfully added by ✅. Though, when the song is not found on Youtube Music, you will see the emoji character ❌, and eventually you will see a new file called `not_found.txt` after the program ends. This file will contain all missing songs from your playlist.
 
 ```
 $ python3 main.py
