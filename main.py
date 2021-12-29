@@ -9,9 +9,16 @@ class Loader:
     def __init__(self):
         pass
 
-    def load(self, url):
+    def load_html(self, url):
         body = requests.get(url)
         return body.text
+
+    def load_playlist_links(self, album_filepath):
+        should_exclude = lambda s: s.startswith("//")
+        links = list()
+        with open(album_filepath, 'r') as infile:
+            links.extend(infile.readlines())
+        return [link.replace("\n", "") for link in links if link.startswith("http") and not should_exclude(link)]
 
 class Parser:
     def __init__(self):
@@ -53,16 +60,22 @@ class OutputWriter:
         return res
 
 '''
-f = open("playlist.html", 'r')
-data = f.read()
-f.close()
+1. read file from albums.txt -> [link]
+2. [link] -> [html_dom]
+3. [html_dom] -> (title, [song_entity])
+4. (title, [song_entity]) -> playlists/title.json
+5. title.json -> ytmusic playlist
 '''
 
-'''
-data = Loader().load("https://music.bugs.co.kr/musicpd/albumview/45863")
-ptitle, body = Parser().generate_json(data)
-OutputWriter().generate_file(ptitle, body)
-'''
+loader = Loader()
+parser = Parser()
+album_links = loader.load_playlist_links('albums.txt')
+album_html_doms = [Loader().load_html(album_link) for album_link in album_links]
+song_entities = [parser.generate_json(album_html_dom) for album_html_dom in album_html_doms]
+for song_title, song_metadata_body in song_entities:
+    OutputWriter().generate_file(song_title, song_metadata_body)
+    print('wrote a file (\"{}.json\") w/ {} of songs'.format(song_title, len(song_metadata_body)))
+
 queries = OutputWriter().build_search_queries()
 ytmusic = YTMusic('headers_auth.json')
 for query in queries:
@@ -70,6 +83,14 @@ for query in queries:
     print(title)
     playlistId = ytmusic.create_playlist(title, title)
     for q in search_queries:
-        search_result = ytmusic.search(q)[0]
-        print(search_result)
-        ytmusic.add_playlist_items(playlistId, [search_result['videoId']])
+        search_results = ytmusic.search(q)
+        if len(search_results) == 0:
+            print('❌ "{}"'.format(q))
+            continue
+
+        search_result = search_results[0]
+        if 'videoId' in search_result:
+            ytmusic.add_playlist_items(playlistId, [search_result['videoId']])
+            print('✅ "{}"'.format(q))
+        else:
+            print('❌ "{}"'.format(q))
