@@ -1,8 +1,8 @@
 from ytmusicapi import YTMusic
-import bugs_loader as BugsLoader
-import bugs_parser as BugsParser
-import bugs_builder as BugsBuilder
-import bugs_logger as BugsLogger
+from bugs_loader import Loader
+from bugs_parser import Parser
+from bugs_builder import Builder
+from bugs_logger import Logger
 
 '''
 1. read file from albums.txt -> [url]
@@ -11,10 +11,10 @@ import bugs_logger as BugsLogger
 4. (title, [song_entity]) -> (title, [search_entity])
 5. (title, [search_entity]) -> ytmusic playlist
 '''
-loader = BugsLoader.Loader()
-parser = BugsParser.Parser()
-builder = BugsBuilder.Builder()
-logger = BugsLogger.Logger()
+loader = Loader()
+parser = Parser()
+builder = Builder()
+logger = Logger()
 album_links = loader.load_playlist_links('albums.txt')
 album_html_doms = [loader.load_html(album_link) for album_link in album_links]
 playlist_entities = [parser.generate_json(album_html_dom) for album_html_dom in album_html_doms]
