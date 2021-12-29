@@ -4,7 +4,7 @@ Migrates playlists from Bugs Music to your Youtube Music library.
 
 # Motivation of the project
 
-My day always goes on with listening to the curated playlists of [Essential](https://www.youtube.com/c/essentialme) for different themes of a day. I love playing their compiled playlists, but a single track of each playlist plays for more than an hour. A minor issue that I've been constantly facing is that I am unable to skip a particular song even if I want to because the playlist is burnt-in as a whole package for the curated songs. Also, even if I find great song to feed in as a seed music to the ML of Youtube Music for recommendations, it would be little hectic for me to pause the music and find the title in order to add into my library. I thought it would make my life much pleasant if I would be able to migrate these playlists to my local library in Youtube Music.
+My day always goes on with listening to the curated playlists of [Essential](https://www.youtube.com/c/essentialme) for different themes of a day. I love playing their compiled playlists, but a single track of each playlist plays for more than an hour. A minor issue that I've been constantly facing is that I am unable to skip a particular song even if I want to because the playlist is burnt-in as a whole package for the curated songs. Also, even if I find a great song to feed in as a seed music to the ML of Youtube Music for recommendations, it would be little hectic for me to pause the music and find the title in order to add into my library. I thought it would make my life much pleasant if I would be able to migrate these playlists to my local library in Youtube Music.
 
 # Installation
 
