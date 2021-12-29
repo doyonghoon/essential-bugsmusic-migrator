@@ -39,6 +39,8 @@ https://music.bugs.co.kr/musicpd/albumview/48678
 
 A migrater reads these urls by line, and will treat it as a ready-to-parse if it starts with `http`. Commenting out like `//` will silently drop the url to be parsed.
 
+* You can find album links of Bug Music from the description section of [each playlist](https://www.youtube.com/watch?v=z060aThI9qM) in Essential channel of Youtube. Or, you can also find the full list of playlists from [the link](https://music.bugs.co.kr/musicpd/).
+
 * Run `python3 main.py`
 
 
