@@ -9,19 +9,19 @@ class Builder:
     def __init__(self):
         pass
 
-    def __delete_hangul(self, s):
+    def delete_hangul(self, s):
         is_hangul = lambda x: True if regex.search(r'\p{IsHangul}', x) else False
         i = s.find('(')
         j = s.find(')')
-        candidate = s[i+1:j]
+        candidate = s[i+1:j] if i >= 0 and j >= 0 else ""
         if is_hangul(candidate):
             res = s[:i] + s[j+1:]
-            return res
+            return res.strip().replace("  ", " ")
         return s
 
     def build_search_query(self, playlist_entity):
         title, song_entities = playlist_entity
-        queries = [" ".join([self.__delete_hangul(song['artist']), song['title'], song['album']]) for song in song_entities]
+        queries = [" ".join([self.delete_hangul(song['artist']), song['title'], song['album']]) for song in song_entities]
         return (title, queries)
 
     def build_search_queries_from_files(self):
